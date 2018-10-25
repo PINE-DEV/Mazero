@@ -6,6 +6,8 @@
 # About procedural content generator: http://pcg.wikidot.com/what-pcg-is
 #def __recursiveBacktracker__(width, height):
 
+from MazeGraph import *
+
 class Maze:
     def __init__(self, width, height, mazeGraph):
         self.width = width
@@ -42,26 +44,11 @@ class Canvas:
         rect = pygame.Rect(x - tile.width / 2, y - tile.height / 2, tile.width, tile.height)
         self.screen.blit(tile.sprite, rect)
 
-class Cell:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-
 class Tile:
     def __init__(self, sprite):
         self.width = sprite.get_rect().width
         self.height = sprite.get_rect().height
         self.sprite = sprite
-
-class MazeGraph:
-    def __init__(self):
-        self.graphList = [Cell(0,0), Cell(0,1)]
-        self.edgesList = [(Cell(0,0), Cell(0,1)), (Cell(2,2), Cell(1,2)), (Cell(-1,0), Cell(0,0))]
-
-    def getEdges(self):
-        return self.edgesList
-
-
 
 # INIT GAME STUFF:
 import sys
@@ -69,13 +56,14 @@ import sys
 import pygame
 
 pygame.init()
-size = width, height = 640, 480
+size = width, height = 1024, 768
 screen = pygame.display.set_mode(size)
 
 walledSprite = pygame.image.load("walledSprite.png")
 pathSprite = pygame.image.load("pathSprite.png")
 
-maze = Maze(3, 3, MazeGraph())
+mazeGraph = MazeGraph(12, 9)
+maze = Maze(12, 9, mazeGraph)
 canvas = Canvas(screen)
 walledTile = Tile(walledSprite)
 pathTile = Tile(pathSprite)
